@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja Przykładowa Strona</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Dodatkowy styl dla odnośnika "Wróć na górę" */
+        #top-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -37,6 +47,20 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
                 <a href="#">Wróć na górę</a>
             </section>
+            <!-- Powielone sekcje -->
+            <section>
+                <h2>Inna Sekcja</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+            </section>
+            <section>
+                <h2>Kolejna Sekcja</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+            </section>
+            <section>
+                <h2>Jeszcze Inna Sekcja</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+            </section>
+            <!-- Koniec powielonych sekcji -->
         </div>
     </main>
     <footer>
@@ -44,5 +68,15 @@
             <p>&copy; 2024 Moja Przykładowa Strona</p>
         </div>
     </footer>
+    <!-- Odnośnik "Wróć na górę" -->
+    <a href="#" id="top-link">Wróć na górę</a>
+
+    <!-- Skrypt JavaScript dla odnośnika "Wróć na górę" -->
+    <script>
+        document.getElementById("top-link").addEventListener("click", function(event) {
+            event.preventDefault(); // Zapobiegaj domyślnemu zachowaniu odnośnika
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Przewiń stronę do góry płynnie
+        });
+    </script>
 </body>
 </html>
