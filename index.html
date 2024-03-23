@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja Przykładowa Strona</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Dodatkowy styl dla odnośnika "Wróć na górę" */
-        #top-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #333;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -34,33 +24,36 @@
         <div class="container">
             <section id="about">
                 <h2>O Nas</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <a href="#services">Dowiedz się więcej o naszych usługach</a>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus. Proin ultricies, purus eget commodo aliquet, purus odio laoreet magna, vitae pulvinar felis purus nec erat.</p>
             </section>
             <section id="services">
                 <h2>Usługi</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <a href="#contact">Skontaktuj się z nami, aby uzyskać więcej informacji</a>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus. Proin ultricies, purus eget commodo aliquet, purus odio laoreet magna, vitae pulvinar felis purus nec erat.</p>
             </section>
             <section id="contact">
                 <h2>Kontakt</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <a href="#">Wróć na górę</a>
+                <form action="#" method="post">
+                    <label for="name">Imię:</label><br>
+                    <input type="text" id="name" name="name" required><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required><br>
+                    <label for="message">Wiadomość:</label><br>
+                    <textarea id="message" name="message" rows="4" required></textarea><br>
+                    <input type="submit" value="Wyślij">
+                </form>
             </section>
-            <!-- Powielone sekcje -->
             <section>
                 <h2>Inna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus. Proin ultricies, purus eget commodo aliquet, purus odio laoreet magna, vitae pulvinar felis purus nec erat.</p>
             </section>
             <section>
                 <h2>Kolejna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus. Proin ultricies, purus eget commodo aliquet, purus odio laoreet magna, vitae pulvinar felis purus nec erat.</p>
             </section>
             <section>
                 <h2>Jeszcze Inna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus. Proin ultricies, purus eget commodo aliquet, purus odio laoreet magna, vitae pulvinar felis purus nec erat.</p>
             </section>
-            <!-- Koniec powielonych sekcji -->
         </div>
     </main>
     <footer>
@@ -68,15 +61,5 @@
             <p>&copy; 2024 Moja Przykładowa Strona</p>
         </div>
     </footer>
-    <!-- Odnośnik "Wróć na górę" -->
-    <a href="#" id="top-link">Wróć na górę</a>
-
-    <!-- Skrypt JavaScript dla odnośnika "Wróć na górę" -->
-    <script>
-        document.getElementById("top-link").addEventListener("click", function(event) {
-            event.preventDefault(); // Zapobiegaj domyślnemu zachowaniu odnośnika
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Przewiń stronę do góry płynnie
-        });
-    </script>
 </body>
 </html>
