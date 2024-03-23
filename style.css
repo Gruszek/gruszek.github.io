@@ -56,7 +56,8 @@ section h2 {
 
 .image-container {
     margin-top: 20px;
-    position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .image-container img {
