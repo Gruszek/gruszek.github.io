@@ -1,7 +1,7 @@
 body {
-    font-family: 'Arial', sans-serif; /* Zmiana czcionki na Arial */
-    background-color: #f0f0f0; /* Kolor tła strony */
-    color: #333; /* Kolor tekstu */
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
     margin: 0;
     padding: 0;
 }
@@ -13,9 +13,10 @@ body {
 }
 
 header {
-    background-color: #333; /* Kolor tła nagłówka */
-    color: #fff; /* Kolor tekstu nagłówka */
+    background: linear-gradient(to right, #4CAF50, #32CD32); /* Gradient tła nagłówka */
+    color: #fff;
     padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Cień */
 }
 
 header nav ul {
@@ -30,8 +31,13 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: #fff; /* Kolor linków w nagłówku */
+    color: #fff;
     text-decoration: none;
+    transition: color 0.3s ease; /* Animacja zmiany koloru tekstu */
+}
+
+header nav ul li a:hover {
+    color: #f0f0f0; /* Zmiana koloru tekstu po najechaniu myszką */
 }
 
 main {
@@ -43,11 +49,11 @@ section {
 }
 
 h1, h2 {
-    color: #333; /* Kolor nagłówków */
+    color: #333;
 }
 
 a {
-    color: #007bff; /* Kolor linków */
+    color: #007bff;
     text-decoration: none;
 }
 
@@ -56,8 +62,8 @@ a:hover {
 }
 
 footer {
-    background-color: #333; /* Kolor tła stopki */
-    color: #fff; /* Kolor tekstu stopki */
+    background-color: #333;
+    color: #fff;
     padding: 20px 0;
     text-align: center;
 }
