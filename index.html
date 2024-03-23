@@ -9,25 +9,41 @@
 <body>
     <header>
         <div class="container">
-            <h1>Moja Przykładowa Strona</h1>
+            <h1>Witaj na Mojej Stronie!</h1>
             <nav>
                 <ul>
                     <li><a href="#">Strona Główna</a></li>
-                    <li><a href="#">O Nas</a></li>
-                    <li><a href="#">Usługi</a></li>
-                    <li><a href="#">Kontakt</a></li>
+                    <li><a href="#about">O Nas</a></li>
+                    <li><a href="#services">Usługi</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
         <div class="container">
-            <section>
-                <h2>Witaj na Mojej Stronie!</h2>
+            <section id="about">
+                <h2>O Nas</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <div class="image-container">
-                    <img src="html.jpg" alt="Obrazek">
-                </div>
+                <a href="#services">Dowiedz się więcej o naszych usługach</a>
+            </section>
+            <section id="services">
+                <h2>Usługi</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
+                <a href="#contact">Skontaktuj się z nami, aby uzyskać więcej informacji</a>
+            </section>
+            <section id="contact">
+                <h2>Kontakt</h2>
+                <form action="#" method="post">
+                    <label for="name">Imię:</label><br>
+                    <input type="text" id="name" name="name" placeholder="Wpisz swoje imię"><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" placeholder="Wpisz swój email"><br>
+                    <label for="message">Wiadomość:</label><br>
+                    <textarea id="message" name="message" rows="4" placeholder="Wpisz swoją wiadomość"></textarea><br>
+                    <input type="submit" value="Wyślij">
+                </form>
+                <a href="#">Wróć na górę</a>
             </section>
         </div>
     </main>
