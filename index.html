@@ -3,74 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Przykładowa Strona</title>
-    <link rel="stylesheet" href="style.css"> <!-- Zaktualizowano nazwę pliku CSS -->
-    <style>
-        /* Styl dla obrazka */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    <title>Kółko i krzyżyk</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Witaj na Mojej Stronie!</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">Strona Główna</a></li>
-                    <li><a href="#about">O Nas</a></li>
-                    <li><a href="#services">Usługi</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-            </nav>
+    <div class="container game-options">
+        <div class="options-buttons">
+            <button class="mode-button selected" data-mode="multi">Gra wieloosobowa</button>
+            <button class="mode-button" data-mode="single">Gra z botem</button>
         </div>
-    </header>
-    <main>
-        <div class="container">
-            <section id="about">
-                <h2>O Nas</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <a href="#services">Dowiedz się więcej o naszych usługach</a>
-            </section>
-            <section id="services">
-                <h2>Usługi</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-                <a href="#contact">Skontaktuj się z nami, aby uzyskać więcej informacji</a>
-            </section>
-            <section id="contact">
-                <h2>Kontakt</h2>
-                <form action="#" method="post">
-                    <label for="name">Imię:</label><br>
-                    <input type="text" id="name" name="name" required><br>
-                    <label for="email">Email:</label><br>
-                    <input type="email" id="email" name="email" required><br>
-                    <label for="message">Wiadomość:</label><br>
-                    <textarea id="message" name="message" rows="4" required></textarea><br>
-                    <input type="submit" value="Wyślij">
-                </form>
-            </section>
-            <section>
-                <h2>Inna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-            </section>
-            <section>
-                <h2>Kolejna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-            </section>
-            <section>
-                <h2>Jeszcze Inna Sekcja</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut turpis sit amet libero semper finibus.</p>
-            </section>
-            <!-- Zmieniony kod obrazka z dodanymi atrybutami szerokości i wysokości -->
-            <img src="html.jpg" alt="HTML" width="500" height="300">
+        <div class="options-buttons">
+            <button class="difficulty-button selected" data-difficulty="easy">Łatwy poziom</button>
+            <button class="difficulty-button" data-difficulty="medium">Średni poziom</button>
+            <button class="difficulty-button" data-difficulty="hard">Trudny poziom</button>
         </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Moja Przykładowa Strona</p>
-        </div>
-    </footer>
+    </div>
+    <div class="container">
+        <div class="board" id="board"></div>
+        <button class="reset-button">Reset</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const board = document.getElementById('board');
+            const resetButton = document.querySelector('.reset-button');
+            const modeButtons = document.querySelectorAll('.mode-button');
+            const difficultyButtons = document.querySelectorAll('.difficulty-button');
+
+            let currentPlayer = 'X';
+            let gameActive = false;
+            let boardState = ['', '', '', '', '', '', '', '', ''];
+            let mode = 'multi'; // domyślnie tryb wieloosobowy
+            let difficulty = 'easy'; // domyślnie łatwy poziom trudności
+
+            function initializeGame() {
+                gameActive = true;
+                boardState = ['', '', '', '', '', '', '', '', ''];
+                renderBoard();
+            }
+
+            function renderBoard() {
+                board.innerHTML = '';
+                boardState.forEach((value, index) => {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.textContent = value;
+                    cell.addEventListener('click', () => handleCellClick(index));
+                    board.appendChild(cell);
+                });
+            }
+
+            function handleCellClick(index) {
+                if (gameActive && boardState[index] === '') {
+                    boardState[index] = currentPlayer;
+                    renderBoard();
+                    checkResult();
+                    togglePlayer();
+                    if (mode === 'single' && gameActive && currentPlayer === 'O') {
+                        setTimeout(makeBotMove, 500); // Czas na ruch bota
+                    }
+                }
+            }
+
+            function togglePlayer() {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+
+            function checkResult() {
+                const winningCombos = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+
+                for (let combo of winningCombos) {
+                    const [a, b, c] = combo;
+                    if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+                        gameActive = false;
+                        alert(`Gracz ${currentPlayer} wygrywa!`);
+                        return;
+                    }
+                }
+
+                if (!boardState.includes('')) {
+                    gameActive = false;
+                    alert('Remis!');
+                }
+            }
+
+            function makeBotMove() {
+                let index;
+                if (difficulty === 'easy') {
+                    index = getRandomEmptyCell();
+                } else if (difficulty === 'medium') {
+                    index = getMediumBotMove();
+                } else if (difficulty === 'hard') {
+                    index = getHardBotMove();
+                }
+                if (index !== undefined) {
+                    boardState[index] = 'O';
+                    renderBoard();
+                    checkResult();
+                    togglePlayer();
+                }
+            }
+
+            function getRandomEmptyCell() {
+                const emptyCells = boardState.reduce((acc, currentValue, index) => {
+                    if (!currentValue) acc.push(index);
+                    return acc;
+                }, []);
+                return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            }
+
+            function getMediumBotMove() {
+                // Sprawdzamy, czy bot może wygrać, blokować gracza lub wybierać losowe puste pole dla średniego poziomu trudności
+                const winningCombos = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+
+                for (let combo of winningCombos) {
+                    const [a, b, c] = combo;
+                    if ((boardState[a] === 'O' && boardState[b] === 'O' && boardState[c] === '') ||
+                        (boardState[a] === 'O' && boardState[c] === 'O' && boardState[b] === '') ||
+                        (boardState[b] === 'O' && boardState[c] === 'O' && boardState[a] === '')) {
+                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
+                    }
+                    if ((boardState[a] === 'X' && boardState[b] === 'X' && boardState[c] === '') ||
+                        (boardState[a] === 'X' && boardState[c] === 'X' && boardState[b] === '') ||
+                        (boardState[b] === 'X' && boardState[c] === 'X' && boardState[a] === '')) {
+                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
+                    }
+                }
+                return getRandomEmptyCell();
+            }
+
+            function getHardBotMove() {
+                // Sprawdzamy, czy bot może wygrać, blokować gracza lub wybierać najlepsze pole dla trudnego poziomu trudności
+                const winningCombos = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+
+                for (let combo of winningCombos) {
+                    const [a, b, c] = combo;
+                    if ((boardState[a] === 'O' && boardState[b] === 'O' && boardState[c] === '') ||
+                        (boardState[a] === 'O' && boardState[c] === 'O' && boardState[b] === '') ||
+                        (boardState[b] === 'O' && boardState[c] === 'O' && boardState[a] === '')) {
+                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
+                    }
+                    if ((boardState[a] === 'X' && boardState[b] === 'X' && boardState[c] === '') ||
+                        (boardState[a] === 'X' && boardState[c] === 'X' && boardState[b] === '') ||
+                        (boardState[b] === 'X' && boardState[c] === 'X' && boardState[a] === '')) {
+                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
+                    }
+                }
+
+                // Preferuj pole środkowe
+                if (boardState[4] === '') return 4;
+
+                // Jeśli nie ma szans na wygraną ani blokady, wybieramy losowe pole
+                return getRandomEmptyCell();
+            }
+
+            function resetGame() {
+                initializeGame();
+                currentPlayer = 'X';
+            }
+
+            function setMode(selectedModeButton) {
+                modeButtons.forEach(button => {
+                    button.classList.remove('selected');
+                });
+                selectedModeButton.classList.add('selected');
+                mode = selectedModeButton.dataset.mode;
+                initializeGame();
+            }
+
+            function setDifficulty(selectedDifficultyButton) {
+                difficultyButtons.forEach(button => {
+                    button.classList.remove('selected');
+                });
+                selectedDifficultyButton.classList.add('selected');
+                difficulty = selectedDifficultyButton.dataset.difficulty;
+            }
+
+            initializeGame();
+
+            resetButton.addEventListener('click', resetGame);
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    setMode(this);
+                });
+            });
+
+            difficultyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    setDifficulty(this);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
