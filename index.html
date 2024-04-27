@@ -1,225 +1,69 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kółko i krzyżyk</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strona o HTML</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container game-options">
-        <div class="options-buttons">
-            <button class="mode-button selected" data-mode="multi">Gra wieloosobowa</button>
-            <button class="mode-button" data-mode="single">Gra z botem</button>
-        </div>
-        <div class="options-buttons">
-            <button class="difficulty-button selected" data-difficulty="easy">Łatwy poziom</button>
-            <button class="difficulty-button" data-difficulty="medium">Średni poziom</button>
-            <button class="difficulty-button" data-difficulty="hard">Trudny poziom</button>
-        </div>
-    </div>
-    <div class="container">
-        <div class="board" id="board"></div>
-        <button class="reset-button">Reset</button>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const board = document.getElementById('board');
-            const resetButton = document.querySelector('.reset-button');
-            const modeButtons = document.querySelectorAll('.mode-button');
-            const difficultyButtons = document.querySelectorAll('.difficulty-button');
+  <header>
+    <h1>Język HTML</h1>
+    <nav>
+      <ul>
+        <li><a href="#hero">Strona Główna</a></li>
+        <li><a href="#about">O języku HTML</a></li>
+        <li><a href="#skills">Podstawowe tagi HTML</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
 
-            let currentPlayer = 'X';
-            let gameActive = false;
-            let boardState = ['', '', '', '', '', '', '', '', ''];
-            let mode = 'multi'; // domyślnie tryb wieloosobowy
-            let difficulty = 'easy'; // domyślnie łatwy poziom trudności
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h2>Witaj w świecie HTML!</h2>
+        <p>Język HTML jest podstawowym językiem używanym do tworzenia stron internetowych. Pozwala on strukturalizować treść strony za pomocą różnych tagów.</p>
+      </div>
+    </section>
 
-            function initializeGame() {
-                gameActive = true;
-                boardState = ['', '', '', '', '', '', '', '', ''];
-                renderBoard();
-            }
+    <section class="about" id="about">
+      <h2>O języku HTML</h2>
+      <p>HTML definiuje strukturę strony za pomocą elementów, które są określane za pomocą tagów. Każdy element może mieć atrybuty, które określają dodatkowe właściwości.</p>
+      <p>Przykładem tagu HTML jest &lt;h1&gt;, który definiuje nagłówek pierwszego poziomu. Inny przykład to &lt;p&gt;, który definiuje akapit.</p>
+    </section>
 
-            function renderBoard() {
-                board.innerHTML = '';
-                boardState.forEach((value, index) => {
-                    const cell = document.createElement('div');
-                    cell.classList.add('cell');
-                    cell.textContent = value;
-                    cell.addEventListener('click', () => handleCellClick(index));
-                    board.appendChild(cell);
-                });
-            }
+    <section class="skills" id="skills">
+      <h2>Podstawowe tagi HTML</h2>
+      <ul>
+        <li>&lt;h1&gt; - Nagłówek 1</li>
+        <li>&lt;p&gt; - Akapit</li>
+        <li>&lt;a&gt; - Link</li>
+        <li>&lt;img&gt; - Obrazek</li>
+        <li>&lt;ul&gt; - Lista nieuporządkowana</li>
+        <li>&lt;ol&gt; - Lista uporządkowana</li>
+      </ul>
+    </section>
 
-            function handleCellClick(index) {
-                if (gameActive && boardState[index] === '') {
-                    boardState[index] = currentPlayer;
-                    renderBoard();
-                    checkResult();
-                    togglePlayer();
-                    if (mode === 'single' && gameActive && currentPlayer === 'O') {
-                        setTimeout(makeBotMove, 500); // Czas na ruch bota
-                    }
-                }
-            }
+    <section class="contact" id="contact">
+      <h2>Kontakt</h2>
+      <p>Skontaktuj się z nami, jeśli masz jakieś pytania lub uwagi.</p>
+      <form action="#" method="POST">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Wiadomość:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <button type="submit">Wyślij</button>
+      </form>
+    </section>
+  </main>
 
-            function togglePlayer() {
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            }
+  <footer>
+    <p>&copy; 2024 Strona o HTML</p>
+  </footer>
 
-            function checkResult() {
-                const winningCombos = [
-                    [0, 1, 2],
-                    [3, 4, 5],
-                    [6, 7, 8],
-                    [0, 3, 6],
-                    [1, 4, 7],
-                    [2, 5, 8],
-                    [0, 4, 8],
-                    [2, 4, 6]
-                ];
-
-                for (let combo of winningCombos) {
-                    const [a, b, c] = combo;
-                    if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
-                        gameActive = false;
-                        alert(`Gracz ${currentPlayer} wygrywa!`);
-                        return;
-                    }
-                }
-
-                if (!boardState.includes('')) {
-                    gameActive = false;
-                    alert('Remis!');
-                }
-            }
-
-            function makeBotMove() {
-                let index;
-                if (difficulty === 'easy') {
-                    index = getRandomEmptyCell();
-                } else if (difficulty === 'medium') {
-                    index = getMediumBotMove();
-                } else if (difficulty === 'hard') {
-                    index = getHardBotMove();
-                }
-                if (index !== undefined) {
-                    boardState[index] = 'O';
-                    renderBoard();
-                    checkResult();
-                    togglePlayer();
-                }
-            }
-
-            function getRandomEmptyCell() {
-                const emptyCells = boardState.reduce((acc, currentValue, index) => {
-                    if (!currentValue) acc.push(index);
-                    return acc;
-                }, []);
-                return emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            }
-
-            function getMediumBotMove() {
-                // Sprawdzamy, czy bot może wygrać, blokować gracza lub wybierać losowe puste pole dla średniego poziomu trudności
-                const winningCombos = [
-                    [0, 1, 2],
-                    [3, 4, 5],
-                    [6, 7, 8],
-                    [0, 3, 6],
-                    [1, 4, 7],
-                    [2, 5, 8],
-                    [0, 4, 8],
-                    [2, 4, 6]
-                ];
-
-                for (let combo of winningCombos) {
-                    const [a, b, c] = combo;
-                    if ((boardState[a] === 'O' && boardState[b] === 'O' && boardState[c] === '') ||
-                        (boardState[a] === 'O' && boardState[c] === 'O' && boardState[b] === '') ||
-                        (boardState[b] === 'O' && boardState[c] === 'O' && boardState[a] === '')) {
-                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
-                    }
-                    if ((boardState[a] === 'X' && boardState[b] === 'X' && boardState[c] === '') ||
-                        (boardState[a] === 'X' && boardState[c] === 'X' && boardState[b] === '') ||
-                        (boardState[b] === 'X' && boardState[c] === 'X' && boardState[a] === '')) {
-                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
-                    }
-                }
-                return getRandomEmptyCell();
-            }
-
-            function getHardBotMove() {
-                // Sprawdzamy, czy bot może wygrać, blokować gracza lub wybierać najlepsze pole dla trudnego poziomu trudności
-                const winningCombos = [
-                    [0, 1, 2],
-                    [3, 4, 5],
-                    [6, 7, 8],
-                    [0, 3, 6],
-                    [1, 4, 7],
-                    [2, 5, 8],
-                    [0, 4, 8],
-                    [2, 4, 6]
-                ];
-
-                for (let combo of winningCombos) {
-                    const [a, b, c] = combo;
-                    if ((boardState[a] === 'O' && boardState[b] === 'O' && boardState[c] === '') ||
-                        (boardState[a] === 'O' && boardState[c] === 'O' && boardState[b] === '') ||
-                        (boardState[b] === 'O' && boardState[c] === 'O' && boardState[a] === '')) {
-                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
-                    }
-                    if ((boardState[a] === 'X' && boardState[b] === 'X' && boardState[c] === '') ||
-                        (boardState[a] === 'X' && boardState[c] === 'X' && boardState[b] === '') ||
-                        (boardState[b] === 'X' && boardState[c] === 'X' && boardState[a] === '')) {
-                        return boardState[a] === '' ? a : boardState[b] === '' ? b : c;
-                    }
-                }
-
-                // Preferuj pole środkowe
-                if (boardState[4] === '') return 4;
-
-                // Jeśli nie ma szans na wygraną ani blokady, wybieramy losowe pole
-                return getRandomEmptyCell();
-            }
-
-            function resetGame() {
-                initializeGame();
-                currentPlayer = 'X';
-            }
-
-            function setMode(selectedModeButton) {
-                modeButtons.forEach(button => {
-                    button.classList.remove('selected');
-                });
-                selectedModeButton.classList.add('selected');
-                mode = selectedModeButton.dataset.mode;
-                initializeGame();
-            }
-
-            function setDifficulty(selectedDifficultyButton) {
-                difficultyButtons.forEach(button => {
-                    button.classList.remove('selected');
-                });
-                selectedDifficultyButton.classList.add('selected');
-                difficulty = selectedDifficultyButton.dataset.difficulty;
-            }
-
-            initializeGame();
-
-            resetButton.addEventListener('click', resetGame);
-            modeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    setMode(this);
-                });
-            });
-
-            difficultyButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    setDifficulty(this);
-                });
-            });
-        });
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
